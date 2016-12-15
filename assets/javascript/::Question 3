@@ -1,0 +1,30 @@
+//Question 3
+option: {
+	  	question: "What color is Absynth?",
+	  	answerChoice: ["Red", "Green", "Black", "Blue"], //answer Green 
+	  	answer: "Green"
+	  }
+//Question 4
+option: {
+	  	question: "The beaver is the national emblem of which country?",
+	  	answerChoice: ["Africa", "Australia", "Canada", "Russia"], //answer Canada 
+	  	answer: "Canada" 
+	  }
+//Question 5
+option: {
+	  	question: "What is the chemical symbol for iron?",
+	  	answerChoice: ["Fe", "Ir", "Bl", "Ag"], //answer Fe 
+	  	answer: "Fe" 
+	  }
+//Question 6
+option: {
+	  	question: "What is a group of unicorns known as?",
+	  	answerChoice: ["A Murder", "A Blessing", "A knot", "An Army"], //answer A Blessing 
+	  	answer: "A Blessing" 
+	  }
+//Question 7
+option: {
+	  	question: "What animal is known to kill more people than plane crashes?",
+	  	answerChoice: ["Donkey", "Giraffe", "Monkey", "Frog"], //answer Donkey 
+	  	answer: "Donkey" 
+	  }
