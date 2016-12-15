@@ -15,16 +15,21 @@ var trivia = [
 	  	// console.log(option.answerChoice[0]);
 ] //end of all questions
 // console.log(trivia[0].answerChoice[3]);
-var timeAllowance = 10;
-var timer;
-var questionCounter = 0;
+var timeAllowance = 10,
+	timer,
+	questionCounter = 0,
+	correctGuesses = 0,
+	incorrectGuesses = 0,
+	unanswered = 0;
+
+
 
 function start() {
 	timer = setInterval(timesUp, 1000);
 }
 function timesUp() {
 	timeAllowance--;
-	$(".timer").html("<p>" + timeAllowance + "</p>");
+	$(".timer").html("<p>Time Left: " + timeAllowance + "</p>");
 	if (timeAllowance === 0) {
 		// alert("Time's Up");
 		stop();
@@ -41,41 +46,39 @@ function getQuestion (){
 	for (var i = 0; i < currentQuestion.answerChoice.length; i ++){
 		var currentAnswer = currentQuestion.answerChoice[i];
 		console.log(currentAnswer);
-		$("#buttonChoice").append("<button class='btn btn-sm clicker' value='" + i + "'>" + currentAnswer + "</button>");
+		$("#buttonChoice").append("<button class='btn btn-sm clicker' value='" + currentAnswer + "'>" + currentAnswer + "</button>");
 	}
-// 		$("#buttonChoice").append("<button class='btn btn-sm clicker' value='" + j + "'>" + trivia[i].answerChoice[j] + "</button>");
-}
-	start();
 	stop();
+	start();
 
-function checkAnswer (){
-	
-
-	//code for checking answer
-	// if (userGuess === trivia.answer) {
-	// 	alert("You right");
-
-		//correctGuesses ++;
-		//nextQuestion();
-
-	//else if userGuess != trivia.answer {
-		//wrongGuesses ++;
-		//nextQuestion();
-	// }
-	//else if timer <=0 {
-		//unanswered++;
-		//nextQuestion();
-	// }
-
-	// }
 }
+
+	$("#buttonChoice").on("click", function(){
+		console.log(".clicker");
+		// if (($(".clicker").val("")) === trivia[questionCounter].answer && timer > 0) {
+		// 	correctGuesses ++;
+		// 	nextQuestion();
+
+		// alert("You right");
+		// }
+		// else if (($(".clicker").attr("value"))!= trivia[questionCounter].answer && timer > 0){
+		// 	// alert("you wrong");
+		// 	incorrectGuesses ++;
+		// 	nextQuestion();
+		// }
+		// else if (timer <= 0) {
+		// 	unanswered ++;
+		// 	nextQuestion();
+		// }
+		
+	});
+
 
 function nextQuestion () {
 	questionCounter ++;
 	getQuestion();
 }
 
-	var userGuess = $(".clicker").val("value", checkAnswer());
 		
 
 
@@ -100,6 +103,7 @@ getQuestion();
 
 // 	for (var j=0; j < currentQuestion.answerChoice.length; j++) {
 // 		var currentAnswer = currentQuestion.answerChoice[j];
+// 		$("#buttonChoice").append("<button class='btn btn-sm clicker' value='" + j + "'>" + trivia[i].answerChoice[j] + "</button>");
 		
 
 // 	}
