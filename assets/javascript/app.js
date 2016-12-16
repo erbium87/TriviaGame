@@ -52,7 +52,7 @@ var timeAllowance = 10,
 	incorrectGuesses = 0,
 	unanswered = 0,
 	pauser,
-	pauseAllowance = 5;
+	pauseAllowance = 3;
 
 
 
@@ -63,6 +63,7 @@ function timesUp() {
 	timeAllowance--;
 	$(".timer").html("<p>Time Left: " + timeAllowance + "</p>");
 	if (timeAllowance === 0) {
+		noGuess();
 		stop();
 	}
 }
@@ -82,6 +83,7 @@ function getQuestion (){
 	}
 	// stop();
 	start();
+	noGuess();
 
 }
 
@@ -108,7 +110,7 @@ getQuestion();
 $(document).on("click", "#buttonChoice button", function() {
 	var userGuess = $(this).attr("value");
 		console.log(userGuess);
-		if (userGuess === trivia[questionCounter].answer && timer > 0) {
+		if (userGuess === trivia[questionCounter].answer && timeAllowance > 0) {
 			pause();
 			$(".currentAnswer").html("<p> You're Right: " + trivia[questionCounter].answer + "</p");
 			// alert("correct");
@@ -117,7 +119,7 @@ $(document).on("click", "#buttonChoice button", function() {
 			correctGuesses ++;
 			// nextQuestion();
 		}
-		else if (userGuess != trivia[questionCounter].answer && timer > 0){
+		else if (userGuess != trivia[questionCounter].answer && timeAllowance > 0){
 			pause();
 			$(".currentAnswer").html("<p>Sorry. The Answer Is: " + trivia[questionCounter].answer + "</p");
 			stop();
@@ -125,16 +127,18 @@ $(document).on("click", "#buttonChoice button", function() {
 			incorrectGuesses ++;
 			// nextQuestion();
 		}
-		else if (timer === 0) {
-			pause();
+
+}); 
+function noGuess() {
+		if (timeAllowance === 0){
+			// alert("times up");
 			$(".currentAnswer").html("<p>Out of Time. The Answer Is: " + trivia[questionCounter].answer + "</p");
+			pause();
+			stop();
 			unanswered ++;
 			// nextQuestion();
 		}
-
-}); 
-
-
+}
 function pause () {
 	pauser = setInterval(pauseUp, 1000);
 }
