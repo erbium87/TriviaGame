@@ -50,7 +50,9 @@ var timeAllowance = 10,
 	questionCounter = 0,
 	correctGuesses = 0,
 	incorrectGuesses = 0,
-	unanswered = 0;
+	unanswered = 0,
+	pauser,
+	pauseAllowance = 5;
 
 
 
@@ -61,12 +63,12 @@ function timesUp() {
 	timeAllowance--;
 	$(".timer").html("<p>Time Left: " + timeAllowance + "</p>");
 	if (timeAllowance === 0) {
-		// alert("Time's Up");
 		stop();
 	}
 }
 function stop() {
 	clearInterval(timer);
+	timeAllowance = 10;
 }
 
 function getQuestion (){
@@ -95,9 +97,9 @@ function nextQuestion () {
 
 function endOfGame () {
 
-	$(".ending").append("<p Correct Answers: >" + correctGuesses + "</p>");
-	$(".ending").append("<p Incorrect Answers: >" + incorrectGuesses + "</p>");
-	$(".ending").append("<p Unanswered Answers: >" + unanswered + "</p>");
+	$(".ending").append("<p>Correct Answers: " + correctGuesses + "</p>");
+	$(".ending").append("<p>Incorrect Answers: " + incorrectGuesses + "</p>");
+	$(".ending").append("<p>Unanswered Answers: " + unanswered + "</p>");
 }
 
 		
@@ -107,23 +109,50 @@ $(document).on("click", "#buttonChoice button", function() {
 	var userGuess = $(this).attr("value");
 		console.log(userGuess);
 		if (userGuess === trivia[questionCounter].answer && timer > 0) {
-			alert("correct");
+			pause();
+			$(".currentAnswer").html("<p> You're Right: " + trivia[questionCounter].answer + "</p");
+			// alert("correct");
+			console.log(userGuess);
 			stop();
 			correctGuesses ++;
-			nextQuestion();
+			// nextQuestion();
 		}
 		else if (userGuess != trivia[questionCounter].answer && timer > 0){
+			pause();
+			$(".currentAnswer").html("<p>Sorry. The Answer Is: " + trivia[questionCounter].answer + "</p");
 			stop();
-			alert("you wrong");
+			// alert("you wrong");
 			incorrectGuesses ++;
-			nextQuestion();
+			// nextQuestion();
 		}
-		else if (timer <= 0) {
+		else if (timer === 0) {
+			pause();
+			$(".currentAnswer").html("<p>Out of Time. The Answer Is: " + trivia[questionCounter].answer + "</p");
 			unanswered ++;
-			nextQuestion();
+			// nextQuestion();
 		}
 
 }); 
+
+
+function pause () {
+	pauser = setInterval(pauseUp, 1000);
+}
+	
+function pauseUp() {
+	pauseAllowance --;
+	if (pauseAllowance === 0) {
+	pauseClear();
+	nextQuestion();
+	}
+}
+
+function pauseClear() {
+	clearInterval(pauser);
+	pauseAllowance = 3;
+}
+
+
 
 });
 	// $(".question").html(trivia[0].option.question);	
