@@ -7,16 +7,46 @@ var trivia = [
 	  	answer: "Laughs" 	  
 	},
 	{
-	  	answer: "Corpse",
 	  	question: "In Texas it's illegal to swear in front of a what?",
-	  	answerChoice: ["Dog", "Child", "Police Officer", "Corpse"] //answer corpse
+	  	answerChoice: ["Dog", "Child", "Police Officer", "Corpse"], //answer corpse
+	  	answer: "Corpse"
 	  
-	}   
+	},   
+	{
+	  	question: "What color is Absynth?",
+	  	answerChoice: ["Red", "Green", "Black", "Blue"], //answer Green 
+	  	answer: "Green"
+	  },
+//Question 4
+	  {
+	  	question: "The beaver is the national emblem of which country?",
+	  	answerChoice: ["Africa", "Australia", "Canada", "Russia"], //answer Canada 
+	  	answer: "Canada" 
+	  },
+//Question 5
+	  {
+	  	question: "What is the chemical symbol for iron?",
+	  	answerChoice: ["Fe", "Ir", "Bl", "Ag"], //answer Fe 
+	  	answer: "Fe" 
+	  },
+//Question 6
+	  {
+	  	question: "What is a group of unicorns known as?",
+	  	answerChoice: ["A Murder", "A Blessing", "A knot", "An Army"], //answer A Blessing 
+	  	answer: "A Blessing" 
+	  },
+//Question 7
+	  {
+	  	question: "What animal is known to kill more people than plane crashes?",
+	  	answerChoice: ["Donkey", "Giraffe", "Monkey", "Frog"], //answer Donkey 
+	  	answer: "Donkey" 
+	  }
 	  	// console.log(option.answerChoice[0]);
 ] //end of all questions
 // console.log(trivia[0].answerChoice[3]);
 var timeAllowance = 10,
 	timer,
+	currentAnswer,
 	questionCounter = 0,
 	correctGuesses = 0,
 	incorrectGuesses = 0,
@@ -44,46 +74,56 @@ function getQuestion (){
 	$(".question").html(currentQuestion.question);
 	$("#buttonChoice").empty();
 	for (var i = 0; i < currentQuestion.answerChoice.length; i ++){
-		var currentAnswer = currentQuestion.answerChoice[i];
+		currentAnswer = currentQuestion.answerChoice[i];
 		console.log(currentAnswer);
 		$("#buttonChoice").append("<button class='btn btn-sm clicker' value='" + currentAnswer + "'>" + currentAnswer + "</button>");
 	}
-	stop();
+	// stop();
 	start();
 
 }
 
-	$("#buttonChoice").on("click", function(){
-		console.log(".clicker");
-		// if (($(".clicker").val("")) === trivia[questionCounter].answer && timer > 0) {
-		// 	correctGuesses ++;
-		// 	nextQuestion();
-
-		// alert("You right");
-		// }
-		// else if (($(".clicker").attr("value"))!= trivia[questionCounter].answer && timer > 0){
-		// 	// alert("you wrong");
-		// 	incorrectGuesses ++;
-		// 	nextQuestion();
-		// }
-		// else if (timer <= 0) {
-		// 	unanswered ++;
-		// 	nextQuestion();
-		// }
-		
-	});
-
-
 function nextQuestion () {
 	questionCounter ++;
+	if (questionCounter > (trivia.length - 1)) {
+		endOfGame();
+	}
+	else {
 	getQuestion();
+	}
+}
+
+function endOfGame () {
+
+	$(".ending").append("<p Correct Answers: >" + correctGuesses + "</p>");
+	$(".ending").append("<p Incorrect Answers: >" + incorrectGuesses + "</p>");
+	$(".ending").append("<p Unanswered Answers: >" + unanswered + "</p>");
 }
 
 		
-
-
 getQuestion();
 
+$(document).on("click", "#buttonChoice button", function() {
+	var userGuess = $(this).attr("value");
+		console.log(userGuess);
+		if (userGuess === trivia[questionCounter].answer && timer > 0) {
+			alert("correct");
+			stop();
+			correctGuesses ++;
+			nextQuestion();
+		}
+		else if (userGuess != trivia[questionCounter].answer && timer > 0){
+			stop();
+			alert("you wrong");
+			incorrectGuesses ++;
+			nextQuestion();
+		}
+		else if (timer <= 0) {
+			unanswered ++;
+			nextQuestion();
+		}
+
+}); 
 
 });
 	// $(".question").html(trivia[0].option.question);	
